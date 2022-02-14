@@ -1,4 +1,4 @@
-conversion_resultusing System;
+using System;
 
 using System.Collections.Generic;
 
@@ -15,7 +15,7 @@ using System.Text.Json.Serialization;
 public class CurrencyResponse
 {
   [JsonPropertyName("conversion_result")]
-  public string Result { get; set; }
+  public double Result { get; set; }
 }
 
 class Program {
@@ -38,17 +38,17 @@ class Program {
     var msg = await stringTask;
     Console.Write(msg);*/
 
-    Console.WriteLine(BASE+KEY+parameters);
+    //Console.WriteLine(BASE+KEY+parameters);
     var streamTask = client.GetStreamAsync(BASE+KEY+parameters);
     var response = await JsonSerializer.DeserializeAsync<CurrencyResponse>(await streamTask);
 
-    Console.WriteLine(response.Result);
+    Console.WriteLine($"\nResult: {response.Result}");
   }
 
 
   static async Task Main (string[] args) 
   {
-    Console.Write("Welcome to the currency converter!\nPlease enter your responses for currencies in the 3 letter format (ISO 4217) e.g. BTC\nWhich currency would you like to convert from?\n: ");
+    Console.Write("Welcome to the currency converter!\nPlease enter your responses for currencies in the 3 letter format (ISO 4217) e.g. GBP\nAn exhaustive list can be found here: https://www.exchangerate-api.com/docs/supported-currencies\n\nWhich currency would you like to convert from?\n: ");
     parameters += ("/" + Console.ReadLine()).ToUpper();
     Console.Write("To which currency?\n: ");
     parameters += ("/" + Console.ReadLine()).ToUpper();
